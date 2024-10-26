@@ -1,9 +1,14 @@
 {
   "todos": [
     {
-      "id": "ebebbfa1-1a8d-4281-be5a-ffebab5a59b3",
-      "content": "하이요",
+      "id": "506a6f95-3452-464f-a657-fa0c9310205b",
+      "content": "엥",
       "checked": false
+    },
+    {
+      "content": "뭐여",
+      "checked": true,
+      "id": "79b42f57-9b81-40c5-a1d0-49d36c4f8ab9"
     }
   ]
 }
