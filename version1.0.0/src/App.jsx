@@ -4,7 +4,7 @@ import FindId from "./pages/login/FindId";
 import FindPw from "./pages/login/FindPw";
 import LoginForm from "./pages/login/LoginForm";
 import SignUpForm from "./pages/login/SignUpForm";
-import TodoMain from "./pages/todo/TodoMain";
+import Main from "./pages/todo/Main";
 import "./style.css";
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route path="/FindId" element={<FindId />} />
           <Route path="/FindPw" element={<FindPw />} />
           <Route path="/SignUpForm" element={<SignUpForm />} />
-          <Route path="/TodoMain" element={<TodoMain />} />
+          <Route path="/TodoList" element={<Main />} />
         </Routes>
       </BrowserRouter>
     </>

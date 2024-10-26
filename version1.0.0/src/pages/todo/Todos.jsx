@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export default function Todos({
+export default function TodoMain({
   id,
   checked,
   content,
