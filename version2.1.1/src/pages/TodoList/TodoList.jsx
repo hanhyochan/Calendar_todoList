@@ -32,7 +32,10 @@ const TodoList = () => {
     }
 
     const deleteTodos = (id) => {
-        
+        axios.delete(`http://localhost:3000/todos/${id}`)
+        .then(() => {
+            setTodos(todos.filter((todo) => (todo.id !== id)))
+        })
     }
 
     return (
