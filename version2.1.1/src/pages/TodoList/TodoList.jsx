@@ -38,13 +38,14 @@ const TodoList = () => {
             })
     }
 
-    const handlecheckTodo = (id, content, checked) => {
-        axios.put(`http://localhost:3000/todos/${id}`, { content: content, checked: !checked })
+    const handlecheckTodo = (id) => {
+        const checkedTodo = todos.find((todo) => todo.id === id)
+        axios.put(`http://localhost:3000/todos/${id}`, { content: checkedTodo.content, checked: !checkedTodo.checked })
             .then(() => {
                 setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)))
             })
     }
-    console.log(todos)
+
     return (
         <div>
             <Calendar onClickDay={setDate} />
@@ -54,7 +55,7 @@ const TodoList = () => {
             <ul>
                 {todos.map((todo) => (
                     <li key={todo.id}>
-                        <input type='checkbox' checked={todo.checked} onChange={() => handlecheckTodo(todo.id, todo.content, todo.checked)} />
+                        <input type='checkbox' checked={todo.checked} onChange={() => handlecheckTodo(todo.id)} />
                         {todo.content}
                         <button onClick={() => handledeleteTodos(todo.id)}>삭제</button>
                     </li>
