@@ -31,6 +31,10 @@ const TodoList = () => {
             })
     }
 
+    const deleteTodos = (id) => {
+        
+    }
+
     return (
         <div>
             <Calendar onClickDay={setDate} />
@@ -41,7 +45,7 @@ const TodoList = () => {
                 {todos.map((todo) => (
                     <li key={todo.id}>
                         {todo.content}
-                        {/* <button onClick={() => deleteTodos(todo.id)}>삭제</button> */}
+                        <button onClick={() => deleteTodos(todo.id)}>삭제</button>
                     </li>
                 ))}
             </ul>
