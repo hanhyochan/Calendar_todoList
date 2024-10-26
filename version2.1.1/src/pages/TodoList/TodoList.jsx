@@ -46,12 +46,17 @@ const TodoList = () => {
             })
     }
 
-    return (
-        <div>
-            <Calendar onClickDay={setDate} />
-            <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
-            <input type='text' ref={todoInput} />
-            <button onClick={addTodos}>제출</button>
+    const TodoInput = () => {
+        return (
+            <>
+                <input type='text' ref={todoInput} />
+                <button onClick={addTodos}>제출</button>
+            </>
+        )
+    }
+
+    const TodoList = () => {
+        return (
             <ul>
                 {todos.map((todo) => (
                     <li key={todo.id}>
@@ -61,6 +66,15 @@ const TodoList = () => {
                     </li>
                 ))}
             </ul>
+        )
+    }
+
+    return (
+        <div>
+            <Calendar onClickDay={setDate} />
+            <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
+            <TodoInput />
+            <TodoList />
         </div>
     );
 };
