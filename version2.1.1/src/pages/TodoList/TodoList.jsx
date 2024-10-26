@@ -11,12 +11,17 @@ const TodoList = () => {
     const todoInput = useRef(null)
     const [todos, setTodos] = useState([])
 
+    const [view, setView] = useState("")
+    const TodoEditInput = useRef(null)
+
+    // 첫 렌더링 시 화면에 정보 뿌리기
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
             .then((res) => (
                 setTodos(res.data)
             ))
     }, [])
+
 
     const addTodos = () => {
         const todoInfo = {
@@ -31,21 +36,6 @@ const TodoList = () => {
             })
     }
 
-    const handledeleteTodos = (id) => {
-        axios.delete(`http://localhost:3000/todos/${id}`)
-            .then(() => {
-                setTodos(todos.filter((todo) => (todo.id !== id)))
-            })
-    }
-
-    const handlecheckTodo = (id) => {
-        const checkedTodo = todos.find((todo) => todo.id === id)
-        axios.put(`http://localhost:3000/todos/${id}`, { content: checkedTodo.content, checked: !checkedTodo.checked })
-            .then(() => {
-                setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)))
-            })
-    }
-
     const TodoInput = () => {
         return (
             <>
@@ -55,26 +45,72 @@ const TodoList = () => {
         )
     }
 
-    const TodoList = () => {
+
+    const TodoItems = () => {
         return (
             <ul>
                 {todos.map((todo) => (
                     <li key={todo.id}>
-                        <input type='checkbox' checked={todo.checked} onChange={() => handlecheckTodo(todo.id)} />
-                        {todo.content}
-                        <button onClick={() => handledeleteTodos(todo.id)}>삭제</button>
+                        {view === todo.id ? <TodoItemeditTemplate todo={todo} /> : <TodoItemViewTemplate todo={todo} />}
                     </li>
                 ))}
             </ul>
         )
     }
 
+
+    const TodoItemViewTemplate = ({ todo }) => {
+        return (
+            <>
+                <input type='checkbox' checked={todo.checked} onChange={() => handleCheckTodo(todo.id)} />
+                {todo.content}
+                <button onClick={() => handleDeleteTodos(todo.id)}>삭제</button>
+                <button onClick={() => setView(todo.id)}>수정</button>
+            </>
+        )
+    }
+
+    const handleCheckTodo = (id) => {
+        const checkedTodo = todos.find((todo) => todo.id === id)
+        axios.put(`http://localhost:3000/todos/${id}`, { content: checkedTodo.content, checked: !checkedTodo.checked })
+            .then(() => {
+                setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)))
+            })
+    }
+
+    const handleDeleteTodos = (id) => {
+        axios.delete(`http://localhost:3000/todos/${id}`)
+            .then(() => {
+                setTodos(todos.filter((todo) => (todo.id !== id)))
+            })
+    }
+
+    const TodoItemeditTemplate = ({ todo }) => {
+        return (
+            <>
+                <input type='text' defaultValue={todo.content} ref={TodoEditInput} />
+                <button onClick={() => handleEditTodos(todo.id)}>저장</button>
+                <button onClick={() => setView(true)}>취소</button>
+            </>
+        )
+    }
+
+    const handleEditTodos = (id) => {
+        const editedTodo = todos.find((todo) => todo.id === id)
+        axios.put(`http://localhost:3000/todos/${id}`, { content: TodoEditInput.current.value, checked: editedTodo.checked })
+            .then(() => {
+                setTodos(todos.map((todo) => (todo.id === id ? { ...todo, content: TodoEditInput.current.value } : todo)))
+                setView("")
+            })
+    }
+
+
     return (
         <div>
             <Calendar onClickDay={setDate} />
             <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
             <TodoInput />
-            <TodoList />
+            <TodoItems />
         </div>
     );
 };
