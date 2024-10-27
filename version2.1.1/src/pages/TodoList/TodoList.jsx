@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar'
 import moment from 'moment';
 import axios from 'axios';
+import TodoInput from './TodoInput';
+import TodoItems from './TodoItems';
 
 const TodoList = () => {
-    // 날짜정보
     const [date, setDate] = useState(new Date())
-
-    const todoInput = useRef(null)
     const [todos, setTodos] = useState([])
-
     const [view, setView] = useState("")
-    const TodoEditInput = useRef(null)
 
-    // 첫 렌더링 시 화면에 정보 뿌리기
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
             .then((res) => (
@@ -23,7 +19,9 @@ const TodoList = () => {
 
     const selectedDate = moment(date).format("YYYYMMDD");
 
-    const addTodos = () => {
+    const addTodos = (todoInput) => {
+        if (todoInput.current.value.trim() === "") return alert(`할일을 입력하세요.`);
+
         const todoInfo = {
             date: selectedDate,
             id: crypto.randomUUID(),
@@ -36,46 +34,6 @@ const TodoList = () => {
                 setTodos([...todos, res.data])
                 todoInput.current.value = ''
             })
-    }
-
-    const TodoInput = () => {
-        return (
-            <>
-                <input type='text' ref={todoInput} />
-                <button onClick={addTodos}>제출</button>
-            </>
-        )
-    }
-
-
-    const TodoItems = () => {
-        return (
-            <ul>
-                {todos.map((todo) => (
-                    <li key={todo.id}>
-                        {view === todo.id ? <TodoItemeditTemplate todo={todo} /> : <TodoItemViewTemplate todo={todo} />}
-                    </li>
-                ))}
-            </ul>
-        )
-    }
-
-
-    const TodoItemViewTemplate = ({ todo }) => {
-
-        if (todo.date === selectedDate) {
-            return (
-                <>
-                    <input type='checkbox' checked={todo.checked} onChange={() => handleCheckTodo(todo.id)} />
-                    {todo.content}
-                    <button onClick={() => handleDeleteTodos(todo.id)}>삭제</button>
-                    <button onClick={() => setView(todo.id)}>수정</button>
-                </>
-            )
-        } else {
-            return <><p>할일이 없습니다.</p></>
-        }
-
     }
 
     const handleCheckTodo = (id) => {
@@ -93,18 +51,7 @@ const TodoList = () => {
             })
     }
 
-
-    const TodoItemeditTemplate = ({ todo }) => {
-        return (
-            <>
-                <input type='text' defaultValue={todo.content} ref={TodoEditInput} />
-                <button onClick={() => handleEditTodos(todo.id)}>저장</button>
-                <button onClick={() => setView(true)}>취소</button>
-            </>
-        )
-    }
-
-    const handleEditTodos = (id) => {
+    const handleEditTodos = (id, TodoEditInput) => {
         const editedTodo = todos.find((todo) => todo.id === id)
         axios.put(`http://localhost:3000/todos/${id}`, { date: editedTodo.date, content: TodoEditInput.current.value, checked: editedTodo.checked })
             .then(() => {
@@ -118,8 +65,10 @@ const TodoList = () => {
         <div>
             <Calendar onClickDay={setDate} />
             <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
-            <TodoInput />
-            <TodoItems />
+            <TodoInput addTodos={addTodos} />
+            <TodoItems
+                todos={todos} selectedDate={selectedDate} view={view} setView={setView} handleEditTodos={handleEditTodos} handleCheckTodo={handleCheckTodo} handleDeleteTodos={handleDeleteTodos}
+            />
         </div>
     );
 };
