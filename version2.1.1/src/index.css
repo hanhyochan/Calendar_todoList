@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-calendar {
+    width: 470px;
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.react-calendar__navigation button {
+    min-width: 44px;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+.react-calendar__month-view abbr {
+    text-decoration: none;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+    padding-bottom: 1rem;
+    font-size: 15px;
+}
+
+/* .react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
+    color: red;
+} */
+
+.react-calendar__tile--now {
+    abbr {
+        color: rgb(246, 0, 29);
+    }
+}
+
+/* .react-calendar__tile--active {
+    background: none;
+} */
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background-color: rgb(202, 0, 24);
+    abbr {
+        color: white;
+    }
+}
+
+.react-calendar__tile {
+    padding: 13px 0px 13px;
+    border-radius: 1000rem;
+}

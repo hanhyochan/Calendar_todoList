@@ -1,4 +1,3 @@
-import './App.css'
 import TodoList from './pages/TodoList/TodoList'
 
 function App() {
@@ -6,7 +5,7 @@ function App() {
 
   return (
     <>
-     <TodoList />
+     <TodoList/>
     </>
   )
 }

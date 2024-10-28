@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar'
 import moment from 'moment';
 import axios from 'axios';
+import Clock from '../../module/Clock';
 import TodoInput from './TodoInput';
 import TodoItems from './TodoItems';
+import { useView } from '../../context/viewContext';
+// import 'react-calendar/dist/Calendar.css';
+
 
 const TodoList = () => {
     const [date, setDate] = useState(new Date())
     const [todos, setTodos] = useState([])
-    const [view, setView] = useState("")
+    const { setView } = useView()
 
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
@@ -16,6 +20,7 @@ const TodoList = () => {
                 setTodos(res.data)
             ))
     }, [])
+
 
     const selectedDate = moment(date).format("YYYYMMDD");
 
@@ -56,19 +61,23 @@ const TodoList = () => {
         axios.put(`http://localhost:3000/todos/${id}`, { date: editedTodo.date, content: TodoEditInput.current.value, checked: editedTodo.checked })
             .then(() => {
                 setTodos(todos.map((todo) => (todo.id === id ? { ...todo, content: TodoEditInput.current.value } : todo)))
-                setView("")
+                setView(false)
             })
     }
 
-
     return (
-        <div>
-            <Calendar onClickDay={setDate} />
-            <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
-            <TodoInput addTodos={addTodos} />
-            <TodoItems
-                todos={todos} selectedDate={selectedDate} view={view} setView={setView} handleEditTodos={handleEditTodos} handleCheckTodo={handleCheckTodo} handleDeleteTodos={handleDeleteTodos}
-            />
+        <div style={{ backgroundColor: 'rgb(231, 231, 231)' }} className="bg-neutral-300 h-screen flex items-center justify-center">
+            <Clock />
+            <div className='flex bg-white w-[1000px] h-[500px] rounded-2xl p-[30px] gap-[30px]'>
+                    <Calendar onClickDay={setDate} />
+                    <div className='w-[470px]'>
+                    <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
+                    <TodoInput addTodos={addTodos} />
+                    <TodoItems
+                        todos={todos} selectedDate={selectedDate} handleEditTodos={handleEditTodos} handleCheckTodo={handleCheckTodo} handleDeleteTodos={handleDeleteTodos}
+                    />
+                </div>
+            </div>
         </div>
     );
 };

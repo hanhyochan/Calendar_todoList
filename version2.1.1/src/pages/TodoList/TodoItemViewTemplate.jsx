@@ -1,4 +1,7 @@
-const TodoItemViewTemplate = ({ todo, handleCheckTodo, handleDeleteTodos, setView }) => {
+import { useView } from "../../context/viewContext";
+
+const TodoItemViewTemplate = ({ todo, handleCheckTodo, handleDeleteTodos}) => {
+    const { setView } = useView()
     return (
         <>
             <input type='checkbox' checked={todo.checked} onChange={() => handleCheckTodo(todo.id)} />
