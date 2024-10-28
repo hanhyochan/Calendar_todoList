@@ -65,12 +65,25 @@ const TodoList = () => {
             })
     }
 
+    const wholeTodosdate = todos.map((todo) => todo.date)
+
+    const dateColor = ({ date, view }) => {
+        if (view === "month") {
+            const calendarDate = moment(date).format("YYYYMMDD");
+            const comparison = wholeTodosdate.filter((date) => date.includes(calendarDate));
+            if (comparison.length > 0) {
+                return "daysWithTodos";
+            }
+        }
+        return null;
+    };
+
     return (
         <div style={{ backgroundColor: 'rgb(231, 231, 231)' }} className="bg-neutral-300 h-screen flex items-center justify-center">
             <Clock />
             <div className='flex bg-white w-[1000px] h-[500px] rounded-2xl p-[30px] gap-[30px]'>
-                    <Calendar onClickDay={setDate} />
-                    <div className='w-[470px]'>
+                <Calendar onClickDay={setDate} tileClassName={dateColor} />
+                <div className='w-[470px]'>
                     <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
                     <TodoInput addTodos={addTodos} />
                     <TodoItems

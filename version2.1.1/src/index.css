@@ -27,9 +27,9 @@
     font-size: 15px;
 }
 
-/* .react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
+.react-calendar__month-view__weekdays__weekday--weekend abbr[title="일요일"] {
     color: red;
-} */
+}
 
 .react-calendar__tile--now {
     abbr {
@@ -37,12 +37,11 @@
     }
 }
 
-/* .react-calendar__tile--active {
-    background: none;
-} */
+.daysWithTodos {
+    background-color: rgb(255, 219, 223);
+}
 
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
+.react-calendar__tile--active {
     background-color: rgb(202, 0, 24);
     abbr {
         color: white;
@@ -52,4 +51,9 @@
 .react-calendar__tile {
     padding: 13px 0px 13px;
     border-radius: 1000rem;
+}
+
+.react-calendar__month-view__days__day {
+    width: 15px;
+    height: 57px;
 }

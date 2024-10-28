@@ -13,7 +13,7 @@ export default function Main() {
   const [value, setValue] = useState(new Date());
   const [content, setContent] = useState("");
   const [todosByDate, setTodosByDate] = useState(savedTodoList);
-console.log(todosByDate)
+
   // todoInfo 객체의 키에 사용 될 내가 현재 누른 날짜값
   const selectedDate = moment(value).format("YYYYMMDD");
 
@@ -38,6 +38,7 @@ console.log(todosByDate)
   const dateColor = ({ date, view }) => {
     if (view === "month") {
       const calendarDate = moment(date).format("YYYYMMDD");
+      console.log(date)
       const comparison = datekeys.filter((x) => x.includes(calendarDate));
       if (comparison.length > 0) {
         return "dateColor";
