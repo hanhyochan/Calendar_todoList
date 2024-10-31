@@ -19,18 +19,6 @@
       "checked": false
     },
     {
-      "date": "20241029",
-      "content": "뭐하냐?",
-      "checked": false,
-      "id": "e64a7a0f-7747-43ac-a3fe-6ba962ccabc1"
-    },
-    {
-      "id": "6f796689-2291-4ca2-a098-14fe65df9730",
-      "date": "20241029",
-      "content": "공부 집중",
-      "checked": false
-    },
-    {
       "id": "85c5657b-6db3-4816-8749-df937fd28fb5",
       "date": "20241030",
       "content": "코딩은 재밌다.",
@@ -58,6 +46,18 @@
       "id": "5625d583-057b-452a-aa37-7ae6b397df49",
       "date": "20241024",
       "content": "gkdl",
+      "checked": false
+    },
+    {
+      "id": "ccc5c917-8604-47db-9bf0-a6e0a0f9b74b",
+      "date": "20241101",
+      "content": "밥 먹기",
+      "checked": false
+    },
+    {
+      "id": "eab4a97d-881c-4df9-8e67-383ab7a0e5f4",
+      "date": "20241101",
+      "content": "자기",
       "checked": false
     }
   ]

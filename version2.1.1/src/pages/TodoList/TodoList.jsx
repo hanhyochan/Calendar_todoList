@@ -13,7 +13,7 @@ const TodoList = () => {
     const [date, setDate] = useState(new Date())
     const [todos, setTodos] = useState([])
     const { setView } = useView()
-
+console.log(todos)
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
             .then((res) => (
@@ -79,7 +79,7 @@ const TodoList = () => {
     };
 
     return (
-        <div style={{ backgroundColor: 'rgb(231, 231, 231)' }} className="bg-neutral-300 h-screen flex items-center justify-center">
+        <div style={{ backgroundColor: 'rgb(231, 231, 231)' }} className="flex items-center justify-center h-screen bg-neutral-300">
             <Clock />
             <div className='flex bg-white w-[1000px] h-[500px] rounded-2xl p-[30px] gap-[30px]'>
                 <Calendar onClickDay={setDate} tileClassName={dateColor} />
