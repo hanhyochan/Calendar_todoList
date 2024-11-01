@@ -6,13 +6,14 @@ import Clock from '../../module/Clock';
 import TodoInput from './TodoInput';
 import TodoItems from './TodoItems';
 import { useView } from '../../context/viewContext';
-// import 'react-calendar/dist/Calendar.css';
+import { useTodos } from '../../context/todoContext';
 
 
 const TodoList = () => {
     const [date, setDate] = useState(new Date())
-    const [todos, setTodos] = useState([])
+    // const [todos, setTodos] = useState([])
     const { setView } = useView()
+    const { todos, setTodos } = useTodos()
 
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
@@ -87,7 +88,7 @@ const TodoList = () => {
                     <h1>{moment(date).format("YYYY년 MM월 DD일")}</h1>
                     <TodoInput addTodos={addTodos} />
                     <TodoItems
-                        todos={todos} selectedDate={selectedDate} handleEditTodos={handleEditTodos} handleCheckTodo={handleCheckTodo} handleDeleteTodos={handleDeleteTodos}
+                        selectedDate={selectedDate} handleEditTodos={handleEditTodos} handleCheckTodo={handleCheckTodo} handleDeleteTodos={handleDeleteTodos}
                     />
                 </div>
             </div>

@@ -1,10 +1,13 @@
 import TodoItemViewTemplate from './TodoItemViewTemplate';
 import TodoItemEditTemplate from './TodoItemeditTemplate';
 import { useView } from '../../context/viewContext';
+import { useTodos } from '../../context/todoContext';
 
-const TodoItems = ({ todos, selectedDate, handleEditTodos, handleCheckTodo, handleDeleteTodos }) => {
-    const filteredTodos = todos.filter((todo) => todo.date === selectedDate)
+const TodoItems = ({ selectedDate, handleEditTodos, handleCheckTodo, handleDeleteTodos }) => {
     const { view } = useView()
+    const { todos } = useTodos()
+    
+    const filteredTodos = todos.filter((todo) => todo.date === selectedDate)
 
     return (
         <ul>
