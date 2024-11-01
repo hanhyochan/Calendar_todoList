@@ -13,12 +13,12 @@ const TodoList = () => {
     const [date, setDate] = useState(new Date())
     const [todos, setTodos] = useState([])
     const { setView } = useView()
-console.log(todos)
+
     useEffect(() => {
         axios.get('http://localhost:3000/todos')
             .then((res) => (
                 setTodos(res.data)
-            ))
+            )).catch((error) => console.error(`할일을 불러오는데 문제가 생겼습니다. 확인 후 다시 시도하십시오.`, error))
     }, [])
 
 
@@ -38,7 +38,7 @@ console.log(todos)
             .then((res) => {
                 setTodos([...todos, res.data])
                 todoInput.current.value = ''
-            })
+            }).catch((error) => console.error(`할일을 추가하는데 문제가 생겼습니다. 확인 후 다시 시도하십시오.`, error))
     }
 
     const handleCheckTodo = (id) => {
@@ -53,7 +53,7 @@ console.log(todos)
         axios.delete(`http://localhost:3000/todos/${id}`)
             .then(() => {
                 setTodos(todos.filter((todo) => (todo.id !== id)))
-            })
+            }).catch((error) => console.error(`할일을 삭제하는데 문제가 생겼습니다. 확인 후 다시 시도하십시오.`, error))
     }
 
     const handleEditTodos = (id, TodoEditInput) => {
@@ -62,7 +62,7 @@ console.log(todos)
             .then(() => {
                 setTodos(todos.map((todo) => (todo.id === id ? { ...todo, content: TodoEditInput.current.value } : todo)))
                 setView(false)
-            })
+            }).catch((error) => console.error(`할일을 수정하는데 문제가 생겼습니다. 확인 후 다시 시도하십시오.`, error))
     }
 
     const wholeTodosdate = todos.map((todo) => todo.date)
