@@ -1,12 +1,31 @@
+import axios from 'axios';
 import { useView } from "../../context/viewContext";
+import { useTodos } from '../../context/todoContext';
 
-const TodoItemViewTemplate = ({ todo, handleCheckTodo, handleDeleteTodos }) => {
+const TodoItemViewTemplate = ({ todo }) => {
     const { setView } = useView()
+    const { todos, setTodos } = useTodos()
+
+    const handleCheckTodo = (id) => {
+        const checkedTodo = todos.find((todo) => todo.id === id)
+        axios.put(`http://localhost:3000/todos/${id}`, { date: checkedTodo.date, content: checkedTodo.content, checked: !checkedTodo.checked })
+            .then(() => {
+                setTodos(todos.map((todo) => (todo.id === id ? { ...todo, checked: !todo.checked } : todo)))
+            })
+    }
+
+    const handleDeleteTodos = (id) => {
+        axios.delete(`http://localhost:3000/todos/${id}`)
+            .then(() => {
+                setTodos(todos.filter((todo) => (todo.id !== id)))
+            }).catch((error) => console.error(`할일을 삭제하는데 문제가 생겼습니다. 확인 후 다시 시도하십시오.`, error))
+    }
+
     return (
         <>
             <div className="flex justify-between mt-[20px]">
                 <div>
-                    <input type='checkbox' checked={todo.checked} onChange={() => handleCheckTodo(todo.id)} className="mr-[15px]"/>
+                    <input type='checkbox' checked={todo.checked} onChange={() => handleCheckTodo(todo.id)} className="mr-[15px]" />
                     {todo.content}
                 </div>
                 <div>

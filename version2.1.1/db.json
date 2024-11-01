@@ -49,15 +49,15 @@
       "checked": false
     },
     {
-      "id": "ccc5c917-8604-47db-9bf0-a6e0a0f9b74b",
       "date": "20241101",
-      "content": "밥 먹기",
-      "checked": false
+      "content": "밥 먹기!",
+      "checked": true,
+      "id": "ccc5c917-8604-47db-9bf0-a6e0a0f9b74b"
     },
     {
-      "id": "eab4a97d-881c-4df9-8e67-383ab7a0e5f4",
+      "id": "23b50f19-6865-4e8f-b688-0636fec81a6f",
       "date": "20241101",
-      "content": "자기",
+      "content": "하이용",
       "checked": false
     }
   ]
